@@ -1,4 +1,6 @@
-Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
+#Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
+Sys.setenv(JAVA_HOME='')
+
 
 ## Load packages
 library(nlrx)
@@ -8,10 +10,12 @@ library(ggthemes)
 
 
 # Windows 
-#netlogopath <- file.path("C:/Program Files/NetLogo 6.0.4")
-#outpath <- file.path("d:/out")
-netlogopath <- file.path("/usr/local/Cluster-Apps/netlogo/6.0.4")
-outpath <- file.path("/home/hs621/github/nlrx")
+netlogopath <- file.path("C:/Program Files/NetLogo 6.0.4") # Where your NetLogo execution file is
+outpath <- file.path("d:/out") 
+
+# Cluster
+#netlogopath <- file.path("/usr/local/Cluster-Apps/netlogo/6.0.4")
+#outpath <- file.path("/home/hs621/github/nlrx")
 
 ## Step1: Create a nl obejct:
 nl <- nl(nlversion = "6.0.4",
@@ -34,7 +38,8 @@ nl@experiment <- experiment(expname = "seoul",
                                              "scenario-percent" = "\"inc-sce\""),
                                              #"AC" = 100),
                             variables = list('AC' = list(values=c(100,150,200))),
-                            metrics.turtles =  list("people" = c("pxcor", "pycor", "homename", "destinationName", "age", "health"))
+                            metrics.turtles =  list("people" = c("pxcor", "pycor", "homename", "destinationName", 
+                                                                 "age", "health"))
                             #metrics.patches = c("pxcor", "pycor", "pcolor")
                             )
 
@@ -42,7 +47,7 @@ nl@experiment <- experiment(expname = "seoul",
 eval_variables_constants(nl)
 
 nl@simdesign <- simdesign_distinct(nl = nl, nseeds = 1)
-#nl@simdesign <- simdesign_simple(nl = nl, nseeds = 1)
+#nl@simdesign <- simdesign_simple(nl = nl, nseeds = 1) # Constants
 
 # Step4: Run simulations:
 init <- Sys.time()
