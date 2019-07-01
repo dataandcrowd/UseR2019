@@ -12,8 +12,7 @@ library(ggthemes)
 # Windows 
 netlogopath <- file.path("C:/Program Files/NetLogo 6.0.4") # Where your NetLogo execution file is
 outpath <- file.path("d:/out") 
-
-# Cluster
+# HPC Cluster
 #netlogopath <- file.path("/usr/local/Cluster-Apps/netlogo/6.0.4")
 #outpath <- file.path("/home/hs621/github/nlrx")
 
@@ -47,7 +46,7 @@ nl@experiment <- experiment(expname = "seoul",
 eval_variables_constants(nl)
 
 nl@simdesign <- simdesign_distinct(nl = nl, nseeds = 1)
-#nl@simdesign <- simdesign_simple(nl = nl, nseeds = 1) # Constants
+#nl@simdesign <- simdesign_simple(nl = nl, nseeds = 1) # Works only with constants
 
 # Step4: Run simulations:
 init <- Sys.time()
