@@ -150,6 +150,8 @@ ggplot() +
         #panel.grid.minor=element_blank(),plot.background=element_blank()
         )
 
+![map](https://user-images.githubusercontent.com/25252172/60673142-02614b80-9e6f-11e9-9117-6507bea9d3c6.png)
+
 ```
 
 ### How many agents are unwell?
