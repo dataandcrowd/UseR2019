@@ -170,6 +170,7 @@ turtle.stat$total <- rowSums(turtle.stat[,c(2:4)], na.rm = T)
 ### Animation files
 
 ```r
+library(gganimate)
 p1 <- ggplot() +
   geom_tile(data=patches, aes(x=pxcor, y=pycor, fill=factor(pcolor))) +
   geom_point(data=turtles, aes(x = pxcor, y = pycor, group=who, color = breed), size=2) +
@@ -181,6 +182,7 @@ p1 <- ggplot() +
   coord_equal() +
   labs(title = 'Step: {frame_time}') +
   theme_void()
+
 
 # Animate the plot and use 1 frame for each step of the model simulations
 gganimate::animate(p1, nframes = length(unique(patches$`[step]`)), width=400, height=400, fps=4)
