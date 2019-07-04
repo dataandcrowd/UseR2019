@@ -149,10 +149,9 @@ ggplot() +
         #panel.background=element_blank(),panel.border=element_blank(),panel.grid.major=element_blank(),
         #panel.grid.minor=element_blank(),plot.background=element_blank()
         )
-
-![map](https://user-images.githubusercontent.com/25252172/60673142-02614b80-9e6f-11e9-9117-6507bea9d3c6.png)
-
 ```
+![map](https://user-images.githubusercontent.com/25252172/60673850-abf50c80-9e70-11e9-99e4-cca09ebc6576.png)
+
 
 ### How many agents are unwell?
 
@@ -164,12 +163,72 @@ turtles %>%
   reshape2::dcast(`[step]` ~ age) -> turtle.stat
 
 turtle.stat$total <- rowSums(turtle.stat[,c(2:4)], na.rm = T)
-
 ```
+| [step] | active | old | young | total |
+|--------|--------|-----|-------|-------|
+| 5201   | NA     | 3   | 1     | 4     |
+| 5301   | NA     | 21  | 9     | 30    |
+| 5401   | NA     | 49  | 26    | 75    |
+| 5501   | NA     | 49  | 27    | 76    |
+| 5601   | NA     | 47  | 24    | 71    |
+| 5701   | NA     | 48  | 25    | 73    |
+| 5801   | NA     | 45  | 25    | 70    |
+| 5901   | NA     | 52  | 27    | 79    |
+| 6001   | NA     | 49  | 27    | 76    |
+| 6101   | NA     | 51  | 27    | 78    |
+| 6201   | NA     | 49  | 27    | 76    |
+| 6301   | NA     | 39  | 25    | 64    |
+| 6401   | NA     | 37  | 25    | 62    |
+| 6501   | NA     | 50  | 27    | 77    |
+| 6601   | NA     | 51  | 27    | 78    |
+| 6701   | NA     | 51  | 27    | 78    |
+| 6801   | 3      | 46  | 23    | 72    |
+| 6901   | 10     | 43  | 21    | 74    |
+| 7001   | 14     | 43  | 20    | 77    |
+| 7101   | 7      | 42  | 19    | 68    |
+| 7201   | 11     | 34  | 18    | 63    |
+| 7301   | 46     | 39  | 20    | 105   |
+| 7401   | 61     | 34  | 19    | 114   |
+| 7501   | 65     | 38  | 28    | 131   |
+| 7601   | 65     | 43  | 57    | 165   |
+| 7701   | 65     | 45  | 69    | 179   |
+| 7801   | 63     | 41  | 37    | 141   |
+| 7901   | 56     | 36  | 25    | 117   |
+| 8001   | 53     | 41  | 35    | 129   |
+| 8101   | 61     | 42  | 51    | 154   |
+| 8201   | 65     | 51  | 97    | 213   |
+| 8301   | 65     | 51  | 97    | 213   |
+| 8401   | 61     | 50  | 91    | 202   |
+| 8501   | 55     | 47  | 78    | 180   |
+| 8601   | 45     | 38  | 63    | 146   |
+| 8701   | 47     | 39  | 64    | 150   |
+
+
 
 ```r
 #Density map
+turtles_density <- results_unnest %>% 
+  select(`[step]`, Scenario, xcor, ycor, age, agent, health) %>% 
+  filter(agent == "turtles", Scenario == "BAU", ycor < 324 & xcor < 294 & xcor > 0) %>% 
+  filter(`[step]` %in% seq(1,8764))
+
+
+turtles_density$health[turtles_density$health <= 0] <- 0
+
+turtles_density %>% 
+  ggplot(aes(health, fill = age)) + 
+  geom_density(alpha = 0.4) +
+  theme_bw() +
+  theme(legend.title = element_text(size=20, face="bold"),
+        legend.text = element_text(size=15),
+        legend.position = c(0.2, 0.8),
+        axis.text=element_text(size=20),
+        axis.title=element_text(size=15,face="bold")
+  )
+
 ```
+![density](https://user-images.githubusercontent.com/25252172/60675183-aa791380-9e73-11e9-8fab-e2483ed786eb.png)
+
 
 ### Animation files
 
