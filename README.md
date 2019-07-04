@@ -10,7 +10,7 @@ From the previous blog, you might have noticed the rationale of using high perfo
 
 ## Easy and intuitive codes
 `nlrx` introduces codes that are catchy and intuitive. Here is a brief example of my model on Windows. If you want a model embedded in the NetLogo library, please refer to the nlrx website.
-Prior to loading your model, you have to follow 3 steps: 1) install package(we will skip that), 2) [setup](https://github.com/mrsensible/UseR2019/tree/master#setup-in-r), 3) [assign variables and conditions](https://github.com/mrsensible/UseR2019/tree/master#create-experiment), and 4) [Plots and animation](https://github.com/mrsensible/UseR2019/tree/master#Plots and animation). 
+Prior to loading your model, you have to follow 3 steps: 1) install package(we will skip that), 2) [setup](https://github.com/mrsensible/UseR2019/tree/master#setup-in-r), 3) [assign variables and conditions](https://github.com/mrsensible/UseR2019/tree/master#create-experiment), and 4) [Plots and animation](https://github.com/mrsensible/UseR2019/tree/master#plots-and-animation). 
 
 
 ### Setup in R
