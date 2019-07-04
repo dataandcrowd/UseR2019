@@ -70,7 +70,7 @@ nl@experiment <- experiment(expname = "seoul",
                                              "scenario-percent" = "\"inc-sce\"",
                                              'AC' = 100),
                             #variables = list('AC' = list(values=c(100,150,200))),
-                            metrics.turtles =  list("turtles" = c("pxcor", "pycor", "color", "heading", "who", 
+                            metrics.turtles =  list("turtles" = c("xcor", "ycor", "color", "heading", "who", 
                                                  "homename", "destinationName", "age", "health")),
                             metrics.patches = c("pxcor", "pycor", "pcolor"))
 
@@ -103,7 +103,9 @@ setsim(nl, "simoutput") <- results
 results_unnest <- unnest_simoutput(nl)
 ```
 
-### Split tibble into agents and patch tibbles (filter individuals whose health are under 100)
+### Split tibble into agents and patch tibbles 
+
+(filter individuals whose health are under 100)
 
 ```r
 ## Load packages
@@ -115,7 +117,7 @@ library(ggthemes)
 
 
 turtles <- results_unnest %>%
-               select(`[step]`, Scenario, pxcor, pycor, age, agent, health) %>% 
+               select(`[step]`, Scenario, xcor, ycor, age, agent, health) %>% 
                filter(agent == "turtles", 
                       Scenario == "BAU", 
                       pycor < 324 & pxcor < 294 & pxcor > 0,
