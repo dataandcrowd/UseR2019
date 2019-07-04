@@ -10,7 +10,7 @@ From the previous blog, you might have noticed the rationale of using high perfo
 
 ## Easy and intuitive codes
 `nlrx` introduces codes that are catchy and intuitive. Here is a brief example of my model on Windows. If you want a model embedded in the NetLogo library, please refer to the nlrx website.
-Prior to loading your model, you have to follow 3 steps: 1) install package(we will skip that), 2) setup, and 3) assign variables and conditions. 
+Prior to loading your model, you have to follow 3 steps: 1) install package(we will skip that), 2) [setup](https://github.com/mrsensible/UseR2019/tree/master#setup-in-r), 3) [assign variables and conditions](https://github.com/mrsensible/UseR2019/tree/master#create-experiment), and 4) [Plots and animation](https://github.com/mrsensible/UseR2019/tree/master#Plots and animation). 
 
 
 ### Setup in R
@@ -91,7 +91,7 @@ Another part, which might seem less important but is actually not, is the file s
 Compared to nlrx, [RNetLogo](http://rnetlogo.r-forge.r-project.org/) has a `while` command that records your global variables as a data frame. It used to be good, but they had problems to assigning *string* variables , which made the user convert it in NetLogo and comback to R for implementation. Moreover, RNetLogo's `.RData` was more than a 100MB for a single iteration which is okay for a local machine, but might be quite excessive if you are working with peers on a version control.
 
 
-## Direct codes for plot and animation
+## Plots and animation
 
 
 
