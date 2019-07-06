@@ -1,6 +1,8 @@
 # UseR2019 - Hyesop Shin: Bridging R and NetLogo
 The best R package for running NetLogo simulation
 
+[Presentation Slides](https://docs.google.com/presentation/d/1r2-6O2fCTNT5ILfKnEL_eL7xxAf0mu9xYlPlNnPCzW8/edit?usp=sharing)
+
 ## Intro
 From the previous blog, you might have noticed the rationale of using high performance computing (HPC), and how fast it is to obtain results compared to our local machines. Having installed all the software requirements on the HPC, today's post is to simulate a *NetLogo* model of my Ph.D work in R using an **nlrx** package(https://ropensci.github.io/nlrx/).
 
