@@ -1,4 +1,4 @@
-# UseR2019 - Hyesop Shin: Bridging R and NetLogo
+# UseR2019: Bridging R and NetLogo with nlrx
 The best R package for running NetLogo simulation
 
 [Presentation Slides](https://docs.google.com/presentation/d/1r2-6O2fCTNT5ILfKnEL_eL7xxAf0mu9xYlPlNnPCzW8/edit?usp=sharing)
