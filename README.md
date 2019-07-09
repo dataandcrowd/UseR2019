@@ -136,7 +136,7 @@ ggplot() +
   facet_wrap(~`[step]`, ncol= 10) +
   coord_equal() +
   geom_tile(data=patches, aes(x=pxcor, y=pycor, fill=pcolor), alpha = .2) +
-  geom_point(data=turtles, aes(x = pxcor, y = pycor, color = age), size=1, show.legend = FALSE) +
+  geom_point(data=turtles, aes(x = xcor, y = ycor, color = age), size=1, show.legend = FALSE) +
   scale_fill_gradient(low = "white", high = "grey20") +
   scale_color_manual(breaks=c("young", "active", "old"), 
                      values = c("young" = "#56B4E9", "active" = "#E69F00", "old" = "#999999")) +
