@@ -123,7 +123,7 @@ turtles <- results_unnest %>%
                select(`[step]`, Scenario, xcor, ycor, age, agent, health) %>% 
                filter(agent == "turtles", 
                       Scenario == "BAU", 
-                      pycor < 324 & pxcor < 294 & pxcor > 0,
+                      ycor < 324 & xcor < 294 & xcor > 0,
                       health <= 100) %>% 
                filter(`[step]` %in% seq(5000,8764))
 
