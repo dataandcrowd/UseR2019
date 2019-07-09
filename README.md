@@ -4,7 +4,7 @@ The best R package for running NetLogo simulation
 [Presentation Slides](https://docs.google.com/presentation/d/1r2-6O2fCTNT5ILfKnEL_eL7xxAf0mu9xYlPlNnPCzW8/edit?usp=sharing)
 
 ## Intro
-From the previous blog, you might have noticed the rationale of using high performance computing (HPC), and how fast it is to obtain results compared to our local machines. Having installed all the software requirements on the HPC, today's post is to simulate a *NetLogo* model of my Ph.D work in R using an **nlrx** package(https://ropensci.github.io/nlrx/).
+From the previous [blog](http://hyesop.rbind.io/2019-03-10-how-to-load-gdal-packages-on-the-hpc/), you might have noticed the rationale of using high performance computing (HPC), and how fast it is to obtain results compared to our local machines. Having installed all the software requirements on the HPC, today's post is to simulate a *NetLogo* model of my Ph.D work in R using an **nlrx** package(https://ropensci.github.io/nlrx/).
 
 `nlrx` has promoted its uniqueness for adopting `.XML` to excecute files that contain various conditions (i.e. runtime, variables, constants, stop conditions), as well as reporting results framed as a [BehaviorSpace format](https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html). As a passionate NetLogo user, I have to give both thumbs up to this package (psst..! and removed other NetLogo packages). Here are the reasons.
 
@@ -96,7 +96,7 @@ Compared to nlrx, [RNetLogo](http://rnetlogo.r-forge.r-project.org/) has a `whil
 
 
 ## Post-simulation
-### Un-nest ABM output
+### Unnest ABM output
 
 ```r
 # Attach results to nl object:
@@ -254,3 +254,29 @@ p1 <- ggplot() +
 gganimate::animate(p1, nframes = length(unique(patches$`[step]`)), width=400, height=400, fps=4)
 anim_save("seoul.gif")
 ```
+
+### Linear and Boxplots
+
+
+~~Codes are not yet reproducible (apologies)!~~
+```r
+b100 <- plotbl100 + annotation_custom(grob = ggplotGrob(plotbb100), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+b150 <- plotbl150 + annotation_custom(grob = ggplotGrob(plotbb150), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+b200 <- plotbl200 + annotation_custom(grob = ggplotGrob(plotbb200), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+
+i100 <- plotil100 + annotation_custom(grob = ggplotGrob(plotib100), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+i150 <- plotil150 + annotation_custom(grob = ggplotGrob(plotib150), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+i200 <- plotil200 + annotation_custom(grob = ggplotGrob(plotib200), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+
+d100 <- plotdl100 + annotation_custom(grob = ggplotGrob(plotdb100), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+d150 <- plotdl150 + annotation_custom(grob = ggplotGrob(plotdb150), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+d200 <- plotdl200 + annotation_custom(grob = ggplotGrob(plotdb200), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+
+
+plot_grid(b100, b150, b200, labels = c("A", "B", "C"), ncol = 3, align = "h")
+plot_grid(i100, i150, i200, labels = c("D", "E", "F"), ncol = 3, align = "h")
+plot_grid(d100, d150, d200, labels = c("G", "H", "I"), ncol = 3, align = "h")
+```
+
+![Figure11_Gangnam](https://user-images.githubusercontent.com/25252172/60906970-b5b7af00-a278-11e9-8ade-836b0084860e.png)
+
