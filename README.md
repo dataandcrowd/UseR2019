@@ -89,7 +89,7 @@ Sys.time() - init
 In short, I think that the developers have made the commands concise and understandable to users in any level.
 
 
-## Small file size
+## File size
 Another part, which might seem less important but is actually not, is the file size. On the previous section, I mentioned that it runs on a XML file and the results is given as a nested data frame. Surprisingly, the `.RData` of my simulation result is only 24MB although I have to acknowledge that it took more than 10GB of your memory during the process. Thus if any of you are running NetLogo on Windows, then the first thing you need to do is to increase your virtual memory `memory.limit(size = 99999)`. If you are using Linux or Mac, I really wish you have a good storage of RAM with a generously allocated swap space to run expensive models.
 
 Compared to nlrx, [RNetLogo](http://rnetlogo.r-forge.r-project.org/) has a `while` command that records your global variables as a data frame. It used to be good, but they had problems to assigning *string* variables , which made the user convert it in NetLogo and comback to R for implementation. Moreover, RNetLogo's `.RData` was more than a 100MB for a single iteration which is okay for a local machine, but might be quite excessive if you are working with peers on a version control.
