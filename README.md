@@ -219,9 +219,10 @@ turtles_density <- results_unnest %>%
 turtles_density$health[turtles_density$health <= 0] <- 0
 
 turtles_density %>% 
+  filter() %>%
   ggplot(aes(health, fill = age)) + 
-  geom_density(alpha = 0.4) +
-  theme_bw() +
+  geom_density(aes(y = ..count..), alpha = 0.25) +
+  theme_bw(`[step]` == 8701) +
   theme(legend.title = element_text(size=20, face="bold"),
         legend.text = element_text(size=15),
         legend.position = c(0.2, 0.8),
@@ -230,7 +231,7 @@ turtles_density %>%
   )
 
 ```
-![density](https://user-images.githubusercontent.com/25252172/60675183-aa791380-9e73-11e9-8fab-e2483ed786eb.png)
+![Density](https://user-images.githubusercontent.com/25252172/60942069-93a64700-a2e1-11e9-8d4b-53385549d0b0.png)
 
 
 ### Animation files
