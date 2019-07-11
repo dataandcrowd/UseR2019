@@ -22,7 +22,7 @@ After the installation, your job is to assign your paths correctly. You will nee
 ```r
 # Java setup
 Sys.setenv(JAVA_HOME='C:/Program Files/Java/jdk1.8.0_202/jre') # Windows
-Sys.setenv(JAVA_HOME= "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/")
+Sys.setenv(JAVA_HOME= "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/") # MacOSX
 Sys.setenv(JAVA_HOME= "/usr/lib/jvm/java-11-openjdk-amd64") # ubuntu
 Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
 
