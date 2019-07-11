@@ -30,7 +30,7 @@ nl@experiment <- experiment(expname = "seoul",
                             idsetup = "setup",  
                             idgo = "go",        
                             runtime = 8764,
-                            evalticks=seq(1,8764, by = 100),
+                            evalticks=seq(4999,8764, by = 100),
                             constants = list("PM10-parameters" = 100,
                                              "Scenario" = "\"BAU\"",
                                              "scenario-percent" = "\"inc-sce\"",
@@ -120,8 +120,9 @@ turtles_density <- results_unnest %>%
 turtles_density$health[turtles_density$health <= 0] <- 0
 
 turtles_density %>% 
+  filter(`[step]` >= 8699) %>% 
   ggplot(aes(health, fill = age)) + 
-  geom_density(alpha = 0.4) +
+  geom_density(aes(y = ..count..), alpha = 0.25) +
   theme_bw() +
   theme(legend.title = element_text(size=20, face="bold"),
         legend.text = element_text(size=15),
@@ -129,4 +130,3 @@ turtles_density %>%
         axis.text=element_text(size=20),
         axis.title=element_text(size=15,face="bold")
   )
-
