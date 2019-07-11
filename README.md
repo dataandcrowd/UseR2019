@@ -1,10 +1,10 @@
-# UseR2019 - Hyesop Shin: Bridging R and NetLogo
+# UseR2019: Bridging R and NetLogo with `nlrx`
 The best R package for running NetLogo simulation
 
 [Presentation Slides](https://docs.google.com/presentation/d/1r2-6O2fCTNT5ILfKnEL_eL7xxAf0mu9xYlPlNnPCzW8/edit?usp=sharing)
 
 ## Intro
-From the previous blog, you might have noticed the rationale of using high performance computing (HPC), and how fast it is to obtain results compared to our local machines. Having installed all the software requirements on the HPC, today's post is to simulate a *NetLogo* model of my Ph.D work in R using an **nlrx** package(https://ropensci.github.io/nlrx/).
+From the previous [blog](http://hyesop.rbind.io/2019-03-10-how-to-load-gdal-packages-on-the-hpc/), you might have noticed the rationale of using high performance computing (HPC), and how fast it is to obtain results compared to our local machines. Having installed all the software requirements on the HPC, today's post is to simulate a *NetLogo* model of my Ph.D work in R using an **nlrx** package(https://ropensci.github.io/nlrx/).
 
 `nlrx` has promoted its uniqueness for adopting `.XML` to excecute files that contain various conditions (i.e. runtime, variables, constants, stop conditions), as well as reporting results framed as a [BehaviorSpace format](https://ccl.northwestern.edu/netlogo/docs/behaviorspace.html). As a passionate NetLogo user, I have to give both thumbs up to this package (psst..! and removed other NetLogo packages). Here are the reasons.
 
@@ -22,7 +22,7 @@ After the installation, your job is to assign your paths correctly. You will nee
 ```r
 # Java setup
 Sys.setenv(JAVA_HOME='C:/Program Files/Java/jdk1.8.0_202/jre') # Windows
-Sys.setenv(JAVA_HOME= "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/")
+Sys.setenv(JAVA_HOME= "/Library/Java/JavaVirtualMachines/jdk1.8.0_212.jdk/Contents/Home/jre/") # MacOSX
 Sys.setenv(JAVA_HOME= "/usr/lib/jvm/java-11-openjdk-amd64") # ubuntu
 Sys.setenv(JAVA_HOME='/usr/local/software/spack/spack-0.11.2/opt/spack/linux-rhel7-x86_64/gcc-5.4.0/jdk-8u141-b15-p4aaoptkqukgdix6dh5ey236kllhluvr/jre') #Ubuntu cluster
 
@@ -89,14 +89,14 @@ Sys.time() - init
 In short, I think that the developers have made the commands concise and understandable to users in any level.
 
 
-## Small file size
+## File size
 Another part, which might seem less important but is actually not, is the file size. On the previous section, I mentioned that it runs on a XML file and the results is given as a nested data frame. Surprisingly, the `.RData` of my simulation result is only 24MB although I have to acknowledge that it took more than 10GB of your memory during the process. Thus if any of you are running NetLogo on Windows, then the first thing you need to do is to increase your virtual memory `memory.limit(size = 99999)`. If you are using Linux or Mac, I really wish you have a good storage of RAM with a generously allocated swap space to run expensive models.
 
 Compared to nlrx, [RNetLogo](http://rnetlogo.r-forge.r-project.org/) has a `while` command that records your global variables as a data frame. It used to be good, but they had problems to assigning *string* variables , which made the user convert it in NetLogo and comback to R for implementation. Moreover, RNetLogo's `.RData` was more than a 100MB for a single iteration which is okay for a local machine, but might be quite excessive if you are working with peers on a version control.
 
 
 ## Post-simulation
-### Un-nest ABM output
+### Unnest ABM output
 
 ```r
 # Attach results to nl object:
@@ -123,7 +123,7 @@ turtles <- results_unnest %>%
                select(`[step]`, Scenario, xcor, ycor, age, agent, health) %>% 
                filter(agent == "turtles", 
                       Scenario == "BAU", 
-                      pycor < 324 & pxcor < 294 & pxcor > 0,
+                      ycor < 324 & xcor < 294 & xcor > 0,
                       health <= 100) %>% 
                filter(`[step]` %in% seq(5000,8764))
 
@@ -136,7 +136,7 @@ ggplot() +
   facet_wrap(~`[step]`, ncol= 10) +
   coord_equal() +
   geom_tile(data=patches, aes(x=pxcor, y=pycor, fill=pcolor), alpha = .2) +
-  geom_point(data=turtles, aes(x = pxcor, y = pycor, color = age), size=1, show.legend = FALSE) +
+  geom_point(data=turtles, aes(x = xcor, y = ycor, color = age), size=1, show.legend = FALSE) +
   scale_fill_gradient(low = "white", high = "grey20") +
   scale_color_manual(breaks=c("young", "active", "old"), 
                      values = c("young" = "#56B4E9", "active" = "#E69F00", "old" = "#999999")) +
@@ -219,9 +219,10 @@ turtles_density <- results_unnest %>%
 turtles_density$health[turtles_density$health <= 0] <- 0
 
 turtles_density %>% 
+  filter() %>%
   ggplot(aes(health, fill = age)) + 
-  geom_density(alpha = 0.4) +
-  theme_bw() +
+  geom_density(aes(y = ..count..), alpha = 0.25) +
+  theme_bw(`[step]` == 8701) +
   theme(legend.title = element_text(size=20, face="bold"),
         legend.text = element_text(size=15),
         legend.position = c(0.2, 0.8),
@@ -230,7 +231,7 @@ turtles_density %>%
   )
 
 ```
-![density](https://user-images.githubusercontent.com/25252172/60675183-aa791380-9e73-11e9-8fab-e2483ed786eb.png)
+![Density](https://user-images.githubusercontent.com/25252172/60942069-93a64700-a2e1-11e9-8d4b-53385549d0b0.png)
 
 
 ### Animation files
@@ -254,3 +255,29 @@ p1 <- ggplot() +
 gganimate::animate(p1, nframes = length(unique(patches$`[step]`)), width=400, height=400, fps=4)
 anim_save("seoul.gif")
 ```
+
+### Linear and Boxplots
+
+
+~~Codes are not yet reproducible (apologies)!~~
+```r
+b100 <- plotbl100 + annotation_custom(grob = ggplotGrob(plotbb100), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+b150 <- plotbl150 + annotation_custom(grob = ggplotGrob(plotbb150), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+b200 <- plotbl200 + annotation_custom(grob = ggplotGrob(plotbb200), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+
+i100 <- plotil100 + annotation_custom(grob = ggplotGrob(plotib100), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+i150 <- plotil150 + annotation_custom(grob = ggplotGrob(plotib150), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+i200 <- plotil200 + annotation_custom(grob = ggplotGrob(plotib200), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+
+d100 <- plotdl100 + annotation_custom(grob = ggplotGrob(plotdb100), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+d150 <- plotdl150 + annotation_custom(grob = ggplotGrob(plotdb150), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+d200 <- plotdl200 + annotation_custom(grob = ggplotGrob(plotdb200), xmin = 4000, xmax = 7500, ymin = 20, ymax = 60)
+
+
+plot_grid(b100, b150, b200, labels = c("A", "B", "C"), ncol = 3, align = "h")
+plot_grid(i100, i150, i200, labels = c("D", "E", "F"), ncol = 3, align = "h")
+plot_grid(d100, d150, d200, labels = c("G", "H", "I"), ncol = 3, align = "h")
+```
+
+![Figure11_Gangnam](https://user-images.githubusercontent.com/25252172/60906970-b5b7af00-a278-11e9-8ade-836b0084860e.png)
+
